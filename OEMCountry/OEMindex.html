@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#edf1e8">
+  <title>Origin Run | OEM Routing Game</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="game-ui.css">
+  <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js" defer></script>
+  <script src="game.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="wordmark" href="./index.html" aria-label="Origin Run home"><span class="logo"><i data-lucide="truck"></i></span>ORIGIN<span class="wordmark-light">RUN</span><span class="edition">THE OEM CHALLENGE</span></a>
+    <div class="header-tools"><span class="live-dot"></span><span class="live-label">ROADSHOW EDITION</span><button class="icon-button" id="sound" aria-label="Enable sound" title="Enable sound"><i data-lucide="volume-x"></i></button><button class="icon-button" id="fullscreen" aria-label="Enter fullscreen" title="Enter fullscreen"><i data-lucide="maximize"></i></button></div>
+  </header>
+  <main>
+    <section class="intro"><div><div class="eyebrow">ONE TRUCK. ONE HOME COUNTRY.</div><h1>MAKE THE RIGHT CONNECTION.</h1><p>A mystery truck. Seven destinations. Where does it belong?</p></div><div class="round-chip"><i data-lucide="flag"></i><span>ROUND <strong id="round-number">01</strong><span class="muted"> / 12</span></span></div></section>
+    <div class="game-layout">
+      <section class="play-area" aria-label="Truck routing game">
+        <div class="yard-top"><div><span class="live-dot"></span> DISPATCH YARD <span class="yard-id">/ TERMINAL 01</span></div><span id="phase-label">AWAITING DISPATCH</span></div>
+        <div class="scene-wrap">
+          <svg id="yard" viewBox="0 0 1100 540" role="img" aria-label="A mystery truck receives an OEM brand in the warehouse">
+            <defs>
+              <pattern id="grass" width="22" height="22" patternUnits="userSpaceOnUse"><path d="M4 5h2M15 17h2" stroke="#d1dcc7" stroke-width="2"/></pattern>
+              <pattern id="roof" width="15" height="15" patternUnits="userSpaceOnUse" patternTransform="skewY(-12)"><path d="M0 0v15" stroke="#748378" stroke-width="2"/></pattern>
+              <filter id="shadow" x="-30%" y="-30%" width="160%" height="170%"><feDropShadow dx="0" dy="6" stdDeviation="4" flood-color="#25382c" flood-opacity=".16"/></filter>
+            </defs>
+            <rect width="1100" height="540" fill="#e4ebdb"/><rect width="1100" height="540" fill="url(#grass)"/>
+            <path d="M0 363H560Q660 363 700 300L830 105M580 363Q710 365 840 190M600 363L842 275M620 363L842 360M590 363Q720 370 840 445" fill="none" stroke="#c2cabc" stroke-width="72" stroke-linecap="round"/>
+            <path d="M0 363H560Q660 363 700 300L830 105M580 363Q710 365 840 190M600 363L842 275M620 363L842 360M590 363Q720 370 840 445" fill="none" stroke="#f7f7ed" stroke-width="59" stroke-linecap="round"/>
+            <path d="M0 363H570M710 285L816 122M731 274L823 205M718 318L823 281M718 363H823M711 401L823 437" fill="none" stroke="#c1c8b9" stroke-width="2" stroke-dasharray="10 12"/>
+            <path id="active-route" fill="none" stroke="#95b943" stroke-width="9" stroke-linecap="round" stroke-dasharray="1 16" opacity="0"/>
+            <g opacity=".7"><path d="M25 450H383M25 468H383" stroke="#c4cebc" stroke-width="2"/><path d="M35 450v35m40-35v35m40-35v35m40-35v35m40-35v35m40-35v35m40-35v35m40-35v35m40-35v35" stroke="#acbaa3" stroke-width="3"/></g>
+            <g id="trees" fill="#99b084"><circle cx="45" cy="115" r="26"/><circle cx="63" cy="94" r="20"/><circle cx="520" cy="97" r="24"/><circle cx="542" cy="80" r="18"/><circle cx="658" cy="490" r="24"/><circle cx="678" cy="474" r="17"/><circle cx="1029" cy="507" r="22"/><circle cx="1060" cy="491" r="26"/></g>
+            <g filter="url(#shadow)">
+              <path d="M112 162L312 125L407 181L206 220Z" fill="#84958b"/><path d="M112 162L312 125L407 181L206 220Z" fill="url(#roof)"/>
+              <path d="M112 162L206 220V316L112 259Z" fill="#b9c5b6"/>
+              <path d="M206 220L407 181V277L206 316Z" fill="#d2dbce"/>
+              <path d="M258 238L350 220V294L258 312Z" fill="#263c32"/>
+              <path d="M258 238L350 220V294L258 312Z" fill="#182c24"/>
+              <g id="warehouse-door"><path d="M258 238L350 220V294L258 312Z" fill="#7d8e80"/><path d="M259 249l90-18m-90 30 90-18m-90 30 90-18m-90 30 90-18m-90 30 90-18" stroke="#65796b" stroke-width="2"/></g>
+              <path d="M235 214L368 188V216L235 242Z" fill="#f7f6e8"/><text x="301" y="220" transform="rotate(-11 301 220)" text-anchor="middle" class="warehouse-title">THE WAREHOUSE</text>
+              <path d="M123 205l48 28v22l-48-28z" fill="#849b91"/><path d="M147 219v22" stroke="#bbc8b8" stroke-width="3"/>
+              <path d="M249 313l113-22 32 25-115 23z" fill="#b4bfae"/>
+              <path d="M264 319l12 9m13-14 12 9m13-14 12 9m13-14 12 9" stroke="#edcc68" stroke-width="5"/>
+            </g>
+            <g fill="#b99162"><path d="M135 282l26-5 15 10v22l-25 5-16-10z"/><path d="M168 304l26-5 15 10v22l-25 5-16-10z"/></g>
+            <g class="cone"><path d="M419 293l8-22 8 22z" fill="#df7a48"/><path d="M422 284h10" stroke="#fff5d9" stroke-width="4"/><rect x="416" y="293" width="23" height="5" rx="2" fill="#5b6958"/></g>
+            <g class="cone" transform="translate(-52 125)"><path d="M419 293l8-22 8 22z" fill="#df7a48"/><path d="M422 284h10" stroke="#fff5d9" stroke-width="4"/><rect x="416" y="293" width="23" height="5" rx="2" fill="#5b6958"/></g>
+            <g id="depots"></g>
+            <g id="truck" transform="translate(55 362)">
+              <ellipse cx="0" cy="25" rx="66" ry="10" fill="#283c2f" opacity=".16"/>
+              <g id="truck-body" filter="url(#shadow)">
+                <rect x="-66" y="-31" width="83" height="48" rx="4" fill="#fbfbf1"/><path d="M-66-31l12-10h79L17-31z" fill="#e4e7dd"/><path d="M17-31l8-10V6l-8 11z" fill="#cdd5c6"/>
+                <path id="cab" d="M23-25h24l19 23v24H21v-42z" fill="#e3ba3f"/><path d="M29-20h15L57-4H29z" fill="#3d5c58"/><path d="M31-17h10L49-7H31z" fill="#8aa7a0"/><path d="M58 2h8v9h-8z" fill="#fff1bd"/><path d="M24 13h42v9H24z" fill="#48594c"/>
+                <rect x="-63" y="14" width="87" height="8" rx="2" fill="#586452"/>
+                <circle cx="-47" cy="22" r="12" fill="#27372e"/><circle cx="-47" cy="22" r="5" fill="#abb5a6"/><circle cx="6" cy="22" r="12" fill="#27372e"/><circle cx="6" cy="22" r="5" fill="#abb5a6"/><circle cx="47" cy="22" r="12" fill="#27372e"/><circle cx="47" cy="22" r="5" fill="#abb5a6"/>
+                <text id="truck-brand" x="-24" y="-4" text-anchor="middle">?</text>
+              </g>
+            </g>
+            <text x="42" y="514" class="scene-caption">ORIGIN RUN LOGISTICS</text><text x="1080" y="514" text-anchor="end" class="scene-caption">EST. 2026</text>
+          </svg>
+          <div id="world-map" class="world-map" hidden>
+            <svg id="map-svg" viewBox="0 0 1100 540" preserveAspectRatio="none" role="img" aria-label="World map with destinations in the United States, United Kingdom, Germany, Italy, Turkey, Spain, and China">
+              <defs><pattern id="map-grid" width="91.667" height="90" patternUnits="userSpaceOnUse"><path d="M0 0H91.667V90" fill="none" stroke="#c3dce2" stroke-width="1"/></pattern></defs>
+              <rect width="1100" height="540" fill="#e2f0f3"/>
+              <rect width="1100" height="540" fill="url(#map-grid)"/>
+              <image href="world-map.svg" width="1100" height="540"/>
+              <path id="map-route" fill="none" stroke="#357c72" stroke-width="4" stroke-dasharray="8 7" opacity="0"/>
+              <g id="map-truck"></g>
+            </svg>
+            <div id="destinations" class="destinations"></div>
+          </div>
+          <div class="dispatch-tag" id="dispatch-tag"><span class="tag-dot"></span><span id="truck-status">MYSTERY CARGO</span></div>
+          <div class="result-overlay" id="result-overlay" hidden></div>
+        </div>
+        <div class="dispatch-bar"><div><span class="small-label">CURRENT DISPATCH</span><div class="dispatch-title" id="dispatch-title">A new arrival is waiting.</div></div><button class="primary-button" id="dispatch"><i data-lucide="arrow-right"></i><span>Send to warehouse</span></button></div>
+        <div class="destination-heading"><span class="small-label">WORLD DISPATCH</span><span id="destination-status">7 countries on the map</span></div>
+      </section>
+      <aside class="dashboard">
+        <div class="score-section"><span class="small-label">YOUR SCORE</span><div class="score-value"><span id="score">0</span><span>PTS</span></div><div class="score-meta"><span><i data-lucide="target"></i><strong id="accuracy">0%</strong> accuracy</span><span><i data-lucide="flame"></i><strong id="streak">0</strong> streak</span></div></div>
+        <div class="manifest-section"><div class="section-heading"><h2>THE LINEUP</h2><span id="completed-count">0 / 12</span></div><div class="progress-track"><div id="progress"></div></div><ol id="manifest"></ol></div>
+        <div class="best-section"><i data-lucide="trophy"></i><div><span class="small-label">PERSONAL BEST</span><strong id="best">0 <span>PTS</span></strong></div></div>
+        <button class="reset-button" id="restart"><i data-lucide="rotate-ccw"></i> Restart round</button>
+      </aside>
+    </div>
+    <footer><span>A LITTLE BRAND KNOWLEDGE. A LONG WAY FROM HOME.</span><span>12 OEMs <span class="footer-dot">&bull;</span> 7 countries <span class="footer-dot">&bull;</span> 1 destination each</span></footer>
+  </main>
+</body>
+</html>
